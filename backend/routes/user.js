@@ -5,6 +5,6 @@ const verifyPassword = require('../middleware/verifyPassword')
 const userCtrl = require('../controllers/user');
 
 router.get('/signup', userCtrl.signup);
-//router.post('/login', userCtrl.login);
+router.post('/login', userCtrl.login);
 
 module.exports = router;

@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `articles`
+-- Table structure for table `Article`
 --
 
-DROP TABLE IF EXISTS `articles`;
+DROP TABLE IF EXISTS `Article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `articles` (
+CREATE TABLE `Article` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `titre` varchar(150) NOT NULL,
   `contenu` tinytext NOT NULL,
@@ -31,27 +31,28 @@ CREATE TABLE `articles` (
   `auteur` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Article_Auteur` (`auteur`),
-  CONSTRAINT `fk_Article_Auteur` FOREIGN KEY (`auteur`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_Article_Auteur` FOREIGN KEY (`auteur`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `articles`
+-- Dumping data for table `Article`
 --
 
-LOCK TABLES `articles` WRITE;
-/*!40000 ALTER TABLE `articles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `articles` ENABLE KEYS */;
+LOCK TABLES `Article` WRITE;
+/*!40000 ALTER TABLE `Article` DISABLE KEYS */;
+INSERT INTO `Article` VALUES (1,'corsica','jai fait le GR20 en 8jours','','2021-01-07 00:00:00',1);
+/*!40000 ALTER TABLE `Article` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `coments`
+-- Table structure for table `Comment`
 --
 
-DROP TABLE IF EXISTS `coments`;
+DROP TABLE IF EXISTS `Comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `coments` (
+CREATE TABLE `Comment` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `coment` tinytext NOT NULL,
@@ -60,46 +61,77 @@ CREATE TABLE `coments` (
   PRIMARY KEY (`id`),
   KEY `fk_coment_auteur` (`auteur`),
   KEY `fk_coment_article` (`article`),
-  CONSTRAINT `fk_coment_article` FOREIGN KEY (`article`) REFERENCES `articles` (`id`),
-  CONSTRAINT `fk_coment_auteur` FOREIGN KEY (`auteur`) REFERENCES `users` (`id`)
+  CONSTRAINT `fk_coment_article` FOREIGN KEY (`article`) REFERENCES `Article` (`id`),
+  CONSTRAINT `fk_coment_auteur` FOREIGN KEY (`auteur`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Comment`
+--
+
+LOCK TABLES `Comment` WRITE;
+/*!40000 ALTER TABLE `Comment` DISABLE KEYS */;
+INSERT INTO `Comment` VALUES (1,'2021-01-07 00:00:00','ERRATUM fait en 15 jours',1,1);
+/*!40000 ALTER TABLE `Comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Reaction`
+--
+
+DROP TABLE IF EXISTS `Reaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Reaction` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` smallint(5) unsigned NOT NULL,
+  `article_id` smallint(5) unsigned NOT NULL,
+  `reaction` enum('like','','unlike') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `User_user_id` (`user_id`),
+  KEY `Article_article_id` (`article_id`),
+  CONSTRAINT `Article_article_id` FOREIGN KEY (`article_id`) REFERENCES `Article` (`id`),
+  CONSTRAINT `User_user_id` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `coments`
+-- Dumping data for table `Reaction`
 --
 
-LOCK TABLES `coments` WRITE;
-/*!40000 ALTER TABLE `coments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `coments` ENABLE KEYS */;
+LOCK TABLES `Reaction` WRITE;
+/*!40000 ALTER TABLE `Reaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Reaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `users`
+-- Table structure for table `User`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+CREATE TABLE `User` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(40) NOT NULL,
   `nom` varchar(30) DEFAULT NULL,
   `prenom` varchar(30) DEFAULT NULL,
   `fonction` varchar(30) DEFAULT NULL,
   `mail` varchar(30) DEFAULT NULL,
+  `password` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `User`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'patator','perrin','michel','comptable','mperrin@groupomania.fr');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,'patator','perrin','michel','comptable','mperrin@groupomania.fr','');
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -111,4 +143,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-09 14:47:40
+-- Dump completed on 2021-01-14 16:58:42

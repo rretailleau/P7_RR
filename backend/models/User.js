@@ -18,4 +18,18 @@ User.abcd = (aaa, result) => {
         
     })
 };
+
+User.findOneByPseudo = (pseudo, result) => {
+    sql.query("SELECT * FROM Users WHERE pseudo=?", pseudo, (err, res) => {
+        console.log('res', res);
+        if (err) {
+            result(err, null);
+            return;
+        } else {
+            result(null, res);
+        }
+        
+    })
+};
+
 module.exports = User;

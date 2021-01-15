@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Groupomania</title>
+</head>
+<body>
+    <div id="app" class="app">
+        <h1>{{ reseauInterne }}</h1>
+        <h2>
+            Bienvenue dans {{ reseauInterne }} ! le réseau des collaborateurs du groupe Groupomania
+        </h2>
+        <ul class="description"> Actuellement sur {{ reseauInterne }}
+            <li v-for="item in article ">
+                <a :href="item.url">{{ item.title }}</a> : {{ item.content }}
+                <div>{{ item.commentaires }}</div> 
+            </li> 
+         
+        </ul>
+        <footer class="footer">
+            <p> {{ copyright }}</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                //apiResponse: [{ name: 'app', url:'/backend/app.js'},
+                reseauInterne: "GROUPONET",
+                article:[
+                    {
+                        title:'je pense donc je suis',
+                        author: 'eric',
+                        content: 'je parle peu mais je dis des choses importantes',
+                        url: '/art1.html',
+                        commentaires:[{
+                            author : 'jean',
+                            content:'moi cest le contraire'
+                        }]
+                    },
+                    {
+                        title:'depuis toujours',
+                        author: 'jean',
+                        content: 'le café est mauvais',
+                        url: '/art1.html',
+                        commentaires:[{
+                            author : 'eric',
+                            content:'moi jadore'
+                        }]
+                    },
+
+                ]
+                     
+            },
+            computed: {
+					copyright() {
+						const currentYear = new Date().getFullYear()
+						return `Copyright ${this.reseauInterne} ${currentYear}`
+                    }
+            }
+        })
+    </script>
+</body>
+</html>
