@@ -6,8 +6,8 @@ const User = function(user) {
     this.fonction = user.fonction;
     this.mail = user.mail;     
 }
-User.abcd = (aaa, result) => {
-    sql.query("SELECT * FROM User_p7 WHERE id=?", aaa, (err, res) => {
+User.abcd = (result) => {
+    sql.query("SELECT * FROM User", (err, res) => {
         console.log('res', res);
         if (err) {
             result(err, null);

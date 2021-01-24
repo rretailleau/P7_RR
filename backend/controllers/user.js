@@ -35,4 +35,17 @@ exports.login = (req, res, next) => {
     });
   };
 
+
+  exports.abc = (req, res, next) => {
+    User.abcd((err,result)=>{
+        if (!result){
+            return res.status(401).json({
+                error:'probleme'
+            })
+        }
+          res.status(200).json(
+            result
+          );         
+    });
+  };
 // finir bcken  route get: si id compare pseudo pasword
