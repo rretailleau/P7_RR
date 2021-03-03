@@ -1,20 +1,27 @@
 <template>
   <div class="about">
-        <h1>{{ reseauInterne }}</h1>
-        <h2>
-            Bienvenue dans {{ reseauInterne }} ! le réseau des collaborateurs du groupe Groupomania
-        </h2>
-        <ul class="description"> Actuellement sur {{ reseauInterne }}
-            <li v-for="item in article ">
-                <a :href="item.url">{{ item.title }}</a> : {{ item.content }}
-                <div>{{ item.commentaires }}</div> 
-            </li> 
-         
-        </ul>
-        <footer class="footer">
-            <p> {{ copyright }}</p>
-        </footer>
+    <button @click="section='articles'">Les actus</button> 
+    <button @click="section='newarticle'">Ecrire un article</button> 
+
+    <Articles v-if="section=='articles'"></Articles>
+    <NewArticle v-if="section=='newarticle'"></NewArticle>  
+
   </div>
 </template>
 
+<script>
+  
+    import Articles from '@/components/Articles.vue'
+    import NewArticle from '@/components/NewArticle.vue'
 
+    export default {
+        components: {
+            Articles, NewArticle
+        },
+    data(){
+        return {
+            section: null
+            }
+        }
+    }
+</script>

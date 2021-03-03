@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
+const articleRoutes = require('./routes/article');
 const path = require('path');
 const helmet = require('helmet');
 require('dotenv').config();
@@ -20,8 +21,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json()); 
 
-app.use('/api/auth', userRoutes);
-
+app.use('/api/users', userRoutes);
+app.use('/api/articles', articleRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
